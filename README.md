@@ -4,6 +4,7 @@
 This script check stats and health Docker (writing for nagios/nrpe)
 
 ### Requierements
+Minimum Docker version -> 1.10.0
 Nagios user need permission to use Docker, please add user nagios in docker group
 ```bash
 usermod -aG docker ${USER}
@@ -21,11 +22,11 @@ chsh -s /bin/bash ${USER}
  print version program<br/>
  -n, --name<br/>
  name docker to check<br/>
- -c, --cpulimitperc=PERC_WARNING_CPU,PERC_CRITCAL_CPU<br/>
+ -c, --cpulimitperc PERC_WARNING_CPU,PERC_CRITCAL_CPU<br/>
  number in percent alert for CPU<br/>
- -m, --memlimitperc=PERC_WARNING_MEM,PERC_CRITICAL_MEM<br/>
+ -m, --memlimitperc PERC_WARNING_MEM,PERC_CRITICAL_MEM<br/>
  number in percent alert for MEM usage<br/>
- -N, --ntwlimit=WARNING_NET_RX,WARNING_NET_TX,CRITCAL_NET_RX,CRITCAL_NET_TX<br/>
+ -N, --ntwlimit WARNING_NET_RX,WARNING_NET_TX,CRITCAL_NET_RX,CRITCAL_NET_TX<br/>
  bandwidth (RX -> DL,TX -> UL) in kBps for docker selected<br/>
  -s, --status<br/>
  check if docker is alive</p>

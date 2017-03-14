@@ -50,11 +50,11 @@ function print_help {
 	print version program
 	-n, --name
         name docker to check
-        -c, --cpulimitperc=PERC_WARNING_CPU,PERC_CRITCAL_CPU
+        -c, --cpulimitperc PERC_WARNING_CPU,PERC_CRITCAL_CPU
         number in percent alert for CPU
-        -m, --memlimitperc=PERC_WARNING_MEM,PERC_CRITICAL_MEM
+        -m, --memlimitperc PERC_WARNING_MEM,PERC_CRITICAL_MEM
         number in percent alert for MEM usage
-        -N, --ntwlimit=WARNING_NET_RX,WARNING_NET_TX,CRITCAL_NET_RX,CRITCAL_NET_TX
+        -N, --ntwlimit WARNING_NET_RX,WARNING_NET_TX,CRITCAL_NET_RX,CRITCAL_NET_TX
         bandwidth (RX -> DL,TX -> UL) in kBps for docker selected
 	-s, --status
 	check if docker is alive"
