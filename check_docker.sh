@@ -12,6 +12,7 @@
 #
 # Please add nagios user in group Docker -> usermod -aG docker ${USER}
 # If nagios have shell "/bin/false" -> chsh -s /bin/bash ${USER}
+# Minimum Docker version -> 1.10.0
 #
 # ---------------------------------------- License -----------------------------------------------------
 # 
@@ -30,7 +31,7 @@
 #
 #----------------------------------------------------------------------------------------------------------
 
-VERSION="Version 1.0"
+VERSION="Version 1.1"
 AUTHOR="2017 by sysC0D"
 STATE_OK=0
 STATE_WARN=1
@@ -103,7 +104,7 @@ function getrxtxdocker () {
         local instanceid=$1
 
         #Get Container ID
-        CID=`docker inspect --format='{{.Id}}' $instanceid`
+       	CID=`docker inspect --format='{{.Id}}' $instanceid`
 
         #Get RX-TX Virtual interface
         TASKS=/sys/fs/cgroup/devices/docker/$CID*/tasks
@@ -145,9 +146,25 @@ function getstats () {
         #CPUPerc - MemUsage - MemPerc - NetIO - BlockIO
         local typestats="$1"
 	local cid="$2"
-
-        currentstats=`docker stats --no-stream --format "{{.Container}}|{{.$typestats}}" | grep $cid`	
-	echo "$currentstats" | awk '{split($0,a,"|"); print a[2]}'	
+	if [[ "$valid_version" == "1" ]]
+        then
+	        currentstats=`docker stats --no-stream --format "{{.Container}}|{{.$typestats}}" | grep $cid`	
+		echo "$currentstats" | awk '{split($0,a,"|"); print a[2]}'
+	else
+		case "$typestats" in
+  		      CPUPerc)
+			currentstats=`docker stats --no-stream | grep $cid | awk '{print $2}'`
+			;;
+        	      MemPerc)
+			currentstats=`docker stats --no-stream | grep $cid | awk '{print $8}'`
+			;;
+		      *)
+            		echo "Unknown argument: $typestats"
+            		exit $STATE_UNKN
+            		;;
+     		esac
+		echo "${currentstats::-1}"
+	fi	
 }
 
 #
@@ -277,6 +294,25 @@ while test -n "$1"; do
      esac
      shift
 done
+
+#Check version docker
+valid_version=0
+version_docker=`docker --version | awk '{split($0,a,","); print a[1]}' | sed "s/Docker version //g"`
+major_param=`echo "$version_docker" | awk '{split($0,a,"."); print a[1]}'`
+minor_param=`echo "$version_docker" | awk '{split($0,a,"."); print a[2]}'`
+if [ "$major_param" -ge "1" ] && [ "$minor_param" -ge "13" ]
+then
+	valid_version=1
+elif [ "$major_param" -ge "1" ] && [ "$minor_param" -ge "10" ]
+then
+	valid_version=0
+elif [ "$major_param" -ge "1" ]
+then
+        valid_version=1
+else
+	echo "Docker version must be higher 1.10.0 for use this plugin"
+	exit $STATE_UNKN
+fi
 
 if [ ! -z $arg_namedocker ]
 then
