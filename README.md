@@ -30,6 +30,7 @@ chsh -s /bin/bash ${USER}
  bandwidth (RX -> DL,TX -> UL) in kBps for docker selected<br/>
  -s, --status<br/>
  check if docker is alive</p>
+
 ```bash
 ./check_docker.sh -n <container name> -c <PERC_WARNING_CPU>,<PERC_CRITCAL_CPU> \
  -m <PERC_WARNING_MEM>,<PERC_CRITICAL_MEM> \
