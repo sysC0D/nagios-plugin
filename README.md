@@ -39,7 +39,7 @@ chsh -s /bin/bash ${USER}
 
 ### Troubleshooting
 If docker stats have zero value for current|limit memory stats :<br/>
-![Alt text](help_script/img_mem_null.jpg?raw=true "MEM USAGE Null")
+![Alt text](help_script/img_mem_null.jpg?raw=true "MEM USAGE Null")<br/>
 Please execute this command :<br/>
 ```bash
 cd help_script; ./enable_memswap_stats.sh
