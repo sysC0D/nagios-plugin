@@ -4,7 +4,7 @@
 This script check stats and health Docker (writing for nagios/nrpe)
 
 ### Requierements
-Minimum Docker version -> 1.10.0
+Minimum Docker version -> 1.10.0 <br />
 Nagios user need permission to use Docker, please add user nagios in docker group
 ```bash
 usermod -aG docker ${USER}
@@ -37,3 +37,10 @@ chsh -s /bin/bash ${USER}
  -N <WARNING_NET_RX,WARNING_NET_TX,CRITCAL_NET_RX,CRITCAL_NET_TX>
 ```
 
+### Troubleshooting
+If docker stats have zero value for current|limit memory stats :<br/>
+![Alt text](help_script/img_mem_null.jpg?raw=true "MEM USAGE Null")
+Please execute this command :<br/>
+```bash
+cd help_script; ./enable_memswap_stats.sh
+```
