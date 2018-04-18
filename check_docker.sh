@@ -77,7 +77,7 @@ function print_version {
 
 function ifexist () {
         local namedocker="$1"
-        checkdocker=`docker ps --filter "name=$namedocker" | grep $namedocker`
+        checkdocker=`docker ps --filter "name=^/$namedocker\$" | grep $namedocker`
 
         if [ ! -z "$checkdocker" ]
         then
@@ -92,7 +92,7 @@ function ifexist () {
 function getshortiddocker () {
         local namedocker=$1
 
-       	shortid=`docker ps | grep $namedocker | awk '{print $1}'`
+       	shortid=`docker ps --filter "name=^/$namedocker\$" | grep $namedocker | awk '{print $1}'`
         echo "$shortid"
 }
 
