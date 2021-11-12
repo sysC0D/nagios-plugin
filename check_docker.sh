@@ -156,7 +156,7 @@ function getstats () {
 			currentstats=`docker stats --no-stream | grep $cid | awk '{print $2}'`
 			;;
         	      MemPerc)
-			currentstats=`docker stats --no-stream | grep $cid | awk '{print $8}'`
+			currentstats=`docker stats --no-stream | grep $cid | awk '{print $7}'`
 			;;
 		      *)
             		echo "Unknown argument: $typestats"
