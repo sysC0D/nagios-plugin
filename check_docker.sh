@@ -153,10 +153,10 @@ function getstats () {
 	else
 		case "$typestats" in
   		      CPUPerc)
-			currentstats=`docker stats --no-stream | grep $cid | awk '{print $2}'`
+			currentstats=`docker stats --no-stream --format "table {{.Name}}\t{{.CPUPerc}}" $cid | tail -n1 | awk '{print $2}'`
 			;;
         	      MemPerc)
-			currentstats=`docker stats --no-stream | grep $cid | awk '{print $8}'`
+			currentstats=`docker stats --no-stream --format "table {{.Name}}\t{{.MemPerc}}" $cid | tail -n1 | awk '{print $2}'`
 			;;
 		      *)
             		echo "Unknown argument: $typestats"
